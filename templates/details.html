@@ -111,9 +111,18 @@
 									<option>6</option>
 								</select>
 							</ul>
-							<input type="button" value="add to cart" />
+							<input type="button" id = 'add' value="add to cart"/>
+                            <script>
+                                $(document).ready(function () {
+                                    $('#add').click(function () {
+                                        $.getJson('/addcart/', function (ret) {
+                                            $('#share').html(ret)
+                                        })
+                                    })
+                                });
+                            </script>
 							<ul class="product-share">
-								<h3>All so Share On</h3>
+								<h3 id="share">All so Share On</h3>
 								<ul>
 									<li><a class="share-face" href="#"><span> </span> </a></li>
 									<li><a class="share-twitter" href="#"><span> </span> </a></li>

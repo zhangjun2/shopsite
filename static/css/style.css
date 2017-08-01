@@ -28,7 +28,6 @@ body{
 /*----start-wrap----*/
 .wrap{
 	width:70%;
-	padding: 20px 0 0 0 ;
 	margin:0 auto;
 }
 .top-header{
@@ -41,7 +40,7 @@ body{
 }
 .top-header-center{
 	float: left;
-	width: 70%;
+	width: 80%;
 	padding: 0.25em;
 	padding: 0.4em;
 }
@@ -1016,7 +1015,6 @@ h2.resp-accordion:first-child {
 .forgot{
 	color: #08080B;
 	font-weight: 700;
-	float:right;
 	font-size: 0.875em;
 	margin-bottom: 1em;
 	display: block;

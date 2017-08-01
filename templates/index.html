@@ -107,8 +107,8 @@
             <div class="content-right">
                 <div class="product-grids">
                     <!--- start-rate---->
-                    <script src="js/jstarbox.js"></script>
-                    <link rel="stylesheet" href="css/jstarbox.css" type="text/css" media="screen" charset="utf-8"/>
+                    <script src="/static/js/jstarbox.js"></script>
+                    <link rel="stylesheet" href="/static/css/jstarbox.css" type="text/css" media="screen" charset="utf-8"/>
                     <script type="text/javascript">
                         jQuery(function () {
                             jQuery('.starbox').each(function () {
@@ -130,44 +130,46 @@
                             });
                         });
                     </script>
+                    <!---//End-rate---->
+                    <!---caption-script---->
+                    <!---//caption-script---->
                     {% for good in goods %}
                         <div onClick="location.href={% url 'detail' good.goodId %};" class="product-grid fade">
-                            <div class="product-grid-head">
-                                <ul class="grid-social">
-                                    <li><a class="facebook" href="#"><span> </span></a></li>
-                                    <li><a class="twitter" href="#"><span> </span></a></li>
-                                    <li><a class="googlep" href="#"><span> </span></a></li>
-                                    <div class="clear"></div>
-                                </ul>
-                                <div class="block">
-                                    <div class="starbox small ghosting"></div>
-                                    <span> (46)</span>
-                                </div>
-                            </div>
-                            <div class="product-pic">
-                                <a href="{% url 'detail' good.goodId %}"><img src="{{ good.fontPageImg }}"
-                                                                              title="product-name"/></a>
-                                <p>
-                                    <a href="#">
-                                        <small>{{ good.name }}</small>
-                                        <small>Phantom</small>
-                                    </a>
-                                    <span>{{ good.description }}</span>
-                                </p>
-                            </div>
-                            <div class="product-info">
-                                <div class="product-info-cust">
-                                    <a href="details.html">Details</a>
-                                </div>
-                                <div class="product-info-price">
-                                    <a href="details.html">&#163; {{ good.price }}</a>
-                                </div>
+                        <div class="product-grid-head">
+                            <ul class="grid-social">
+                                <li><a class="facebook" href="#"><span> </span></a></li>
+                                <li><a class="twitter" href="#"><span> </span></a></li>
+                                <li><a class="googlep" href="#"><span> </span></a></li>
                                 <div class="clear"></div>
-                            </div>
-                            <div class="more-product-info">
-                                <span> </span>
+                            </ul>
+                            <div class="block">
+                                <div class="starbox small ghosting"></div>
+                                <span> (46)</span>
                             </div>
                         </div>
+                        <div class="product-pic">
+                            <a href="#"><img src="{{ good.fontPageImg }}" title="product-name"/></a>
+                            <p>
+                                <a href="#">
+                                    <small>{{ good.name }}</small>
+                                    <small>Phantom</small>
+                                    </a>
+                                <span>{{ good.description }}</span>
+                            </p>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-info-cust">
+                                <a href="{% url 'detail' good.goodId %}">Details</a>
+                            </div>
+                            <div class="product-info-price">
+                                <a href="details.html">&#163; {{ good.price }}</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="more-product-info">
+                            <span> </span>
+                        </div>
+                    </div>
                     {% endfor %}
                     <div class="clear"></div>
                 </div>

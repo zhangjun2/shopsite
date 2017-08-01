@@ -1,4 +1,6 @@
-from django.http import HttpResponse, HttpResponseRedirect
+import json
+
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -23,8 +25,6 @@ def detail(request, id):
     if good_id:
         good = Goods.objects.filter(goodId=good_id)
         return render(request, 'details.html', {'good': good})
-
-
 
 
 @csrf_exempt
@@ -60,3 +60,8 @@ def register(request):
             return redirect(reverse('index'))
     else:
         return render(request, 'register.html')
+
+
+def addcar(req):
+    name_dict = {'twz': 'Love python and Django', 'zqxt': 'I am teaching Django'}
+    return JsonResponse(name_dict)

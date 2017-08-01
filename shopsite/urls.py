@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^login/', views.login, name='login'),
     url(r'^register', views.register, name='register'),
     url(r'^detail/(\d+)/$', views.detail, name='detail'),
-    # url(r'^')
+    url(r'^addcart/^$', views.addcar, name='addcart')
 ]
