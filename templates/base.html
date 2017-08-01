@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'header.html' %}
+<body>
+<script>
+$(function(){
+	var a = $('.top-header'),
+		b =a.offset();
+	$(document).on('scroll',function(){
+		var	c = $(document).scrollTop();
+		if(b.top<=c){
+			a.css({'position':'fixed','top':'0px','width':'100%','z-index':'1000'})
+			}else{
+				a.css({'position':'absolute','top':'300px','width':'100%'})
+				}
+		})
+	})
+</script>
+{% include 'topbar.html' %}
+
+{% block content %}
+
+{% endblock %}
+
+{% include 'bottom.html' %}
+</body>
+</html>
