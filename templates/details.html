@@ -75,34 +75,41 @@
 					</div>
 					<div class="details-left-info">
 						<div class="details-right-head">
-						<h1>Product Name Goes Here</h1>
+						<h1>{{ good.name }}</h1>
 						<ul class="pro-rate">
-							<li><a class="product-rate" href="#"> <label> </label></a> <span> </span></li>
-							<li><a href="#">0 Review(s) Add Review</a></li>
+							<li><a class="product-rate" href=""> <label> </label></a> <span> </span></li>
+                            {% if good.reviews > 0 %}
+                                <li><a href="">{{ good.reviews }} Reviews</a></li>
+                            {% else %}
+                                <li><a href="">0 Review</a></li>
+                            {% endif %}
+
 						</ul>
-						<p class="product-detail-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+						{% comment %}<p class="product-detail-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>{% endcomment %}
+                        <p class="product-detail-info">{{ good.description }}. </p>
 						<a class="learn-more" href="#"><h3>MORE DETAILS</h3></a>
 						<div class="product-more-details">
 							<ul class="price-avl">
-								<li class="price"><span>$153.39</span><label>$145.72</label></li>
+								<li class="price"><span>$999.00</span><label>{{ good.price }}</label></li>
 								<li class="stock"><i>In stock</i></li>
 								<div class="clear"> </div>
 							</ul>
 							<ul class="product-colors">
 								<h3>available Colors ::</h3>
-								<li><a class="color1" href="#"><span> </span></a></li>
-								<li><a class="color2" href="#"><span> </span></a></li>
-								<li><a class="color3" href="#"><span> </span></a></li>
-								<li><a class="color4" href="#"><span> </span></a></li>
-								<li><a class="color5" href="#"><span> </span></a></li>
-								<li><a class="color6" href="#"><span> </span></a></li>
-								<li><a class="color7" href="#"><span> </span></a></li>
-								<li><a class="color8" href="#"><span> </span></a></li>
+								<li><a class="color1" href=""><span> </span></a></li>
+								<li><a class="color2" href=""><span> </span></a></li>
+								<li><a class="color3" href=""><span> </span></a></li>
+								<li><a class="color4" href=""><span> </span></a></li>
+								<li><a class="color5" href=""><span> </span></a></li>
+								<li><a class="color6" href=""><span> </span></a></li>
+								<li><a class="color7" href=""><span> </span></a></li>
+								<li><a class="color8" href=""><span> </span></a></li>
 								<div class="clear"> </div>
 							</ul>
 							<ul class="prosuct-qty">
 								<span>Quantity:</span>
-								<select>
+								<select id="quantity" name="quantity">
 									<option>1</option>
 									<option>2</option>
 									<option>3</option>
@@ -112,11 +119,13 @@
 								</select>
 							</ul>
 							<input type="button" id = 'add' value="add to cart"/>
+                            <h3 id="result"></h3>
                             <script>
                                 $(document).ready(function () {
                                     $('#add').click(function () {
-                                        $.getJson('/addcart/', function (ret) {
-                                            $('#share').html(ret)
+                                        var select = $("#quantity").find("option:selected").text();
+                                        $.get('/addcart/', {'goodId':'{{ good.goodId }}', 'quantity':select},function (ret) {
+                                            $('#result').html('成功添加至购物车')
                                         })
                                     })
                                 });
@@ -124,10 +133,10 @@
 							<ul class="product-share">
 								<h3 id="share">All so Share On</h3>
 								<ul>
-									<li><a class="share-face" href="#"><span> </span> </a></li>
-									<li><a class="share-twitter" href="#"><span> </span> </a></li>
-									<li><a class="share-google" href="#"><span> </span> </a></li>
-									<li><a class="share-rss" href="#"><span> </span> </a></li>
+									<li><a class="share-face" href=""><span> </span> </a></li>
+									<li><a class="share-twitter" href=""><span> </span> </a></li>
+									<li><a class="share-google" href=""><span> </span> </a></li>
+									<li><a class="share-rss" href=""><span> </span> </a></li>
 									<div class="clear"> </div>
 								</ul>
 							</ul>
@@ -137,7 +146,7 @@
 					<div class="clear"> </div>
 				</div>
 				<div class="details-right">
-					<a href="#">SEE MORE</a>
+					<a href="">SEE MORE</a>
 				</div>
 				<div class="clear"> </div>
 			</div>

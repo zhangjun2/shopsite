@@ -1,8 +1,10 @@
+import uuid
+
 from django.db import models
 
 
 class Customer(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.CharField(primary_key=True, max_length=40, default=uuid.uuid4, editable=False)
     userAccount = models.CharField(max_length=20, unique=True)
     mobile = models.CharField(max_length=20, null=True, unique=True)
     email = models.EmailField(unique=True, null=False, default='')
@@ -31,7 +33,7 @@ class GoodType(models.Model):
 
 
 class Store(models.Model):
-    id = models.IntegerField(auto_created=True)
+    id = models.CharField(auto_created=True, max_length=40, default=uuid.uuid4, editable=False)
     storeId = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=100)
 
@@ -39,12 +41,15 @@ class Store(models.Model):
 class Goods(models.Model):
     goodType = models.ForeignKey(GoodType)
     storeId = models.ForeignKey(Store)
-    id = models.IntegerField(auto_created=True)
+    id = models.CharField(auto_created=True, max_length=40, default=uuid.uuid4, editable=False)
+    # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     goodId = models.BigIntegerField(primary_key=True)
     price = models.FloatField(max_length=10)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     fontPageImg = models.CharField(max_length=200, null=False, default='')
+    reviews = models.IntegerField(default=0)
+    star = models.IntegerField(default=0)
 
     def __repr__(self):
         return super().__repr__()
@@ -54,8 +59,8 @@ class Goods(models.Model):
 
 
 class ShoppingCar(models.Model):
-    id = models.IntegerField(primary_key=True)
-    userId = models.IntegerField()
+    id = models.CharField(primary_key=True, auto_created=True, max_length=40, default=uuid.uuid4, editable=False)
+    userId = models.CharField( max_length=40, default=uuid.uuid4, editable=False)
     quantity = models.IntegerField(default=1)
     good = models.ForeignKey('Goods', unique=False)
 

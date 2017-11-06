@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block login %}
+    {{ username }}
+{% endblock %}
+{% block title %}
+    首页
+{% endblock %}
+{% block content %}
+    {#    <script>#}
+    {#        $.get('/querycar/', function (ret) {#}
+    {#            if (ret.count > 0) {#}
+    {#                #}
+    {#            } else {#}
+    {#            }#}
+    {##}
+    {#        });#}
+    {#    </script>#}
+
+    <div style="height: 400px;width: 60%; margin: 0 auto">
+        <table class="table table-bordered">
+            <caption>购物车物品</caption>
+            <thead>
+            <tr>
+                <th>名称</th>
+                <th>价格</th>
+                <th>数量</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for good in  goods %}
+                <tr>
+                    <td>{{ good.good.name }}</td>
+                    <td>{{ good.good.price }}</td>
+                    <td>{{ good.quantity }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+

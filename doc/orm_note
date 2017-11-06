@@ -41,3 +41,17 @@ Author.objects.filter(name__contains="Wei").exclude(email="tuweizhong@163.com")
 # 找出名称含有abc, 但是排除年龄是23岁的
 Person.objects.filter(name__contains="abc").exclude(age=23)
 
+
+---QuerySet 重复的问题，使用 .distinct() 去重
+一般的情况下，QuerySet 中不会出来重复的，重复是很罕见的，但是当跨越多张表进行检索后，结果并到一起，可以会出来重复的值（我最近就遇到过这样的问题）
+qs1 = Pathway.objects.filter(label__name='x')
+qs2 = Pathway.objects.filter(reaction__name='A + B >> C')
+qs3 = Pathway.objects.filter(inputer__name='WeizhongTu')
+# 合并到一起
+qs = qs1 | qs2 | qs3
+这个时候就有可能出现重复的
+# 去重方法
+qs = qs.distinct()
+
+
+

@@ -14,15 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
 
+# from shop import view
 from shop import views
+from shop.view import user
 
 urlpatterns = [
-    url(r'^$', views.index),
+    url(r'^$', views.index, name='home'),
     url(r'^index/$', views.index, name='index'),
-    url(r'^login/', views.login, name='login'),
-    url(r'^register', views.register, name='register'),
+    url(r'^login/', user.login, name='login'),
+    url(r'^register', user.register, name='register'),
     url(r'^detail/(\d+)/$', views.detail, name='detail'),
-    url(r'^addcart/^$', views.addcar, name='addcart')
+    url(r'^addcart/$', views.addcar, name='addcart'),
+    url(r'^download/$', views.download, name='download'),
+    url(r'^querycar/$', views.queryCar, name='querycar'),
+    url(r'^cart/$', views.cartView, name='cartView')
 ]

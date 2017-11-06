@@ -36,17 +36,16 @@ body{
 .top-header-left{
 	float:left;
 	width:10%;
-	padding: 0.25em 0 0 0;
+	padding: 0.5em 0 ;
 }
 .top-header-center{
 	float: left;
 	width: 80%;
-	padding: 0.25em;
-	padding: 0.4em;
+	padding: 0.5em 0;
 }
 .top-header-right{
 	float: right;
-	padding: 0.25em 0;
+	padding: 0.5em 0;
 }
 .top-header-left ul li{
 	display:inline-block;
@@ -404,8 +403,8 @@ input[type=checkbox].css-checkbox15:checked + label i.css-label15 {
 /*---start-rating----*/
 /*---start-product-grid----*/
 .product-grid{
-	width: 30.33%;
-	margin: 0 4% 4% 0;
+	width: 30%;
+	margin: 0 3% 3% 0;
 	float: left;
 	border: 1px solid #E9E9E9;
 	position: relative;
@@ -946,6 +945,7 @@ h2.resp-accordion:first-child {
 	margin-right: 0;
 	border: 1px solid #EEE;
 	padding: 1em 1.5em;
+	margin-top: 5em;
 }
 .login-right h3{
 	color:#08080B;
@@ -1978,6 +1978,7 @@ span.mail a:hover{
 	.login-right {
 		float: none;
 		width: 92%;
+		margin-top: 5em;
 	}
 	.details-left-slider {
 		width: 100%;
@@ -2109,6 +2110,7 @@ span.mail a:hover{
 	.login-right {
 		float: none;
 		width: 90%;
+		margin-top: 5em;
 	}
 	.details-left-slider {
 		width: 100%;
@@ -2269,6 +2271,7 @@ span.mail a:hover{
 	.login-right {
 		float: none;
 		width: 87%;
+		margin-top: 5em;
 	}
 	.details-left-slider {
 		width: 100%;
@@ -2296,7 +2299,7 @@ span.mail a:hover{
 	}
 	.top-header-center {
 		width: 66%;
-		padding: 0.4em 0 0 0em;
+		padding: 0.5em 0 ;
 	}
 	.product-info-cust {
 		width: 48%;
@@ -2491,6 +2494,7 @@ span.mail a:hover{
 		float: none;
 		width: 87%;
 		padding: 0.5em 1em;
+		margin-top: 5em;
 	}
 	.login-right input[type="text"] {
 		width: 93%;
@@ -2527,7 +2531,7 @@ span.mail a:hover{
 	}
 	.top-header-center {
 		width: 62%;
-		padding: 0.4em 0 0 0em;
+		padding: 0.5em 0 ;
 	}
 	.product-info-cust {
 		width: 48%;
@@ -2724,8 +2728,8 @@ span.mail a:hover{
 		width: 29%;
 	}
 	.top-header {
-		height: 34px;
-		padding: 0.15em 0;
+		height: 30px;
+		padding: 0.15em 0.15em;
 	}
 	.logo span {
 		width: 85px;
