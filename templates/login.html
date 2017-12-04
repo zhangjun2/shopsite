@@ -13,18 +13,20 @@
 {#						<a class="acount-btn" href="{% url 'register' %}">Creat an Account</a>#}
 {#					</div>#}
 					<div class="login-right">
-						<h3>REGISTERED CUSTOMERS</h3>
+						<h3>用户登录</h3>
 						<p>If you have an account with us, please log in.</p>
 						<form action="{% url 'login' %}" method="post">
 
 							<div>
-								<span>Email Address<label>*</label></span>
+								<span>用户名<label>*</label></span>
 								<input type="text" name="email">
 							</div>
 							<div>
-								<span>Password<label>*</label></span>
+								<span>密码<label>*</label></span>
 								<input type="text" name="password">
 							</div>
+
+                            <input type="checkbox" name="ismanager">管理员登录
 							<input type="submit" value="Login" />
 						</form>
 					</div>

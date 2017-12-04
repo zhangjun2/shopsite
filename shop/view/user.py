@@ -11,20 +11,35 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from shop import cartApi
-from shop.models import Customer, Goods, ShoppingCar
+from shop.models import Customer, Goods, ShoppingCar, Manager
+
 
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        c = Customer.objects.filter(email=email, password=password).first()
-        if c:
-            request.session['username'] = c.userAccount
-            request.session['userId'] = c.id
-            return redirect(reverse('index'))
+        ismanager = request.POST['ismanager']
+        request.session['ismanager'] = ismanager
+        print(ismanager)
+        if ismanager:
+            userAccount = request.POST['email']
+            password = request.POST['password']
+            c = Manager.objects.filter(userAccount=userAccount, password=password).first()
+            if c:
+                request.session['username'] = c.userAccount
+                request.session['userId'] = c.manage_id
+                return redirect(reverse('index'))
+            else:
+                return HttpResponse('管理员登录失败')
         else:
-            return HttpResponse('邮箱或者密码错误！')
+            email = request.POST['email']
+            password = request.POST['password']
+            c = Customer.objects.filter(email=email, password=password).first()
+            if c:
+                request.session['username'] = c.userAccount
+                request.session['userId'] = c.id
+                return redirect(reverse('index'))
+            else:
+                return HttpResponse('邮箱或者密码错误！')
     else:
         return render(request, 'login.html')
 
@@ -45,4 +60,4 @@ def register(request):
                 request.session['userId'] = str(user.id)
             return redirect(reverse('index'))
     else:
-        return render(request, 'register.html')
+        return render(request, 'add_good_m.html')

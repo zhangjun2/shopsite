@@ -10,72 +10,42 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from shop import cartApi
-from shop.models import Customer, Goods, ShoppingCar
+from shop.models import Customer, Goods, ShoppingCar, Manager
 
 
-def index(request):
-    page = request.GET.get('page')
-    if page is None:
-        goods = Goods.objects.all()[0:10]
-        # goods1 = Goods.objects.values('name', 'price')
-        # goods2 = Goods.objects.values_list('name')
+def index(request, ismanager=False):
+    regsite_manager()
+    if ismanager:
+        return render(request, 'home_m.html')
     else:
-        goods = Goods.objects.all()[(int(page)-1)*10:int(page)*10]
-    # print(goods1)
-    # print(goods2)
+        page = request.GET.get('page')
+        if page is None:
+            goods = Goods.objects.all()[0:10]
+            # goods1 = Goods.objects.values('name', 'price')
+            # goods2 = Goods.objects.values_list('name')
+        else:
+            goods = Goods.objects.all()[(int(page)-1)*10:int(page)*10]
+        # print(goods1)
+        # print(goods2)
 
-    # count  = ShoppingCar.objects.values('good_id').annotate(count=Count('id'))
-    # count = ShoppingCar.objects.filter(good__name='Nike LBJII').values('id')
-    # print(count)
-    print(list(goods))
-    return render(request, 'index.html', {'goods': list(goods)})
+        # count  = ShoppingCar.objects.values('good_id').annotate(count=Count('id'))
+        # count = ShoppingCar.objects.filter(good__name='Nike LBJII').values('id')
+        # print(count)
+        # for good in goods:
+        #     good.good_id = str(good.good_id)
+        return render(request, 'index.html', {'goods': list(goods)})
 
 
 def detail(request, id):
-    good_id = int(id)
-    if good_id:
-        good = Goods.objects.filter(goodId=good_id).first()
+    # good_id = int(id)
+    if id:
+        good = Goods.objects.filter(good_id=id).first()
         good.reviews += 1
         good.save()
         return render(request, 'details.html', {'good': good})
 
 
-@csrf_exempt
-def login(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        c = Customer.objects.filter(email=email, password=password).first()
-        if c:
-            request.session['username'] = c.userAccount
-            request.session['userId'] = c.id
-            return redirect(reverse('index'))
-        else:
-            return HttpResponse('邮箱或者密码错误！')
-    else:
-        return render(request, 'login.html')
-
-
-@csrf_exempt
-def register(request):
-    if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        username = request.POST['username']
-        p = Customer.objects.filter(email=email)
-        if len(p) > 0:
-            return HttpResponse('邮箱已被注册')
-        else:
-            user = Customer.objects.create(userAccount=username, email=email, password=password)
-            if user:
-                request.session['username'] = user.userAccount
-                request.session['userId'] = str(user.id)
-            return redirect(reverse('index'))
-    else:
-        return render(request, 'register.html')
-
-
-#加入购物车
+# 加入购物车
 def addcar(req):
     goodId = req.GET.get('goodId')
     quantity = req.GET.get('quantity')
@@ -125,3 +95,28 @@ def cartView(req):
     return render(req, 'cart.html', {'goods': s})
 
 
+# 管理员添加产品
+@csrf_exempt
+def addgood(req):
+    if req.method == 'POST':
+        good = Goods.objects.create(
+            name=req.POST['name'],
+            price=req.POST['price'],
+            description=req.POST['description'],
+            fontPageImg=req.FILES.get('fontimage'),
+            goodType_id=req.POST['type']
+        )
+        if good:
+            return HttpResponse('添加成功')
+        else:
+            return HttpResponse('添加失败!')
+    pass
+
+
+# 注册一个管理员账号
+def regsite_manager():
+    if Manager.objects.first():
+        pass
+    else:
+        manager = Manager.objects.create(username='张军',userAccount='zhangjun',password='zhangjun6615');
+        manager.save()

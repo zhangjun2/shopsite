@@ -101,7 +101,7 @@
                     <!---caption-script---->
                     <!---//caption-script---->
                     {% for good in goods %}
-                        <div onClick="window.location.href='{% url 'detail' good.goodId %}'" class="product-grid fade">
+                        <div onClick="window.location.href='{% url 'detail' good.good_id %}'" class="product-grid fade">
                         <div class="product-grid-head">
                             <ul class="grid-social">
                                 <li><a class="facebook" href=""><span> </span></a></li>
@@ -115,7 +115,7 @@
                             </div>
                         </div>
                         <div class="product-pic">
-                            <a style="width:100% ;margin: 0 auto" href="#"><img style="width:80% ;margin: 0 auto" src="{{ good.fontPageImg }}" title="product-name"/></a>
+                            <a style="width:100% ;margin: 0 auto" href="#"><img style="width:80% ;margin: 0 auto" src="{{ good.fontPageImg.url }}" title="product-name"/></a>
                             <p>
                                 <a href="#">
                                     <small>{{ good.name }}</small>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="product-info">
                             <div class="product-info-cust">
-                                <a href="{% url 'detail' good.goodId %}">Details</a>
+                                <a href="{% url 'detail' good.good_id %}">Details</a>
                             </div>
                             <div class="product-info-price">
                                 <a >&#163; {{ good.price }}</a>
