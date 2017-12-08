@@ -15,10 +15,14 @@ class Customer(models.Model):
     updateTime = models.TimeField(auto_now_add=True, null=True)
 
     def __repr__(self):
-        return super().__repr__()
+        return self.userAccount
 
     def __str__(self):
         return self.userAccount
+
+    class Meta():
+        verbose_name = '用户'
+        verbose_name_plural = verbose_name
 
 
 class GoodType(models.Model):
@@ -51,11 +55,14 @@ class Goods(models.Model):
     creatTime = models.TimeField(auto_now_add=True, null=True)
     updateTime = models.TimeField(auto_now_add=True, null=True)
 
-    def __repr__(self):
-        return super().__repr__()
-
     def __str__(self):
         return self.name
+
+    __repr__ = __str__
+
+    class Meta():
+        verbose_name = '商品'
+        verbose_name_plural = verbose_name
 
 
 class ShoppingCar(models.Model):
@@ -76,4 +83,11 @@ class Manager(models.Model):
     password = models.CharField(max_length=20, null=False, default='')
     registerTime = models.TimeField(auto_now_add=True, null=True)
     updateTime = models.TimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.username
+
+    class Meta():
+        verbose_name = '管理员'
+        verbose_name_plural = verbose_name
 

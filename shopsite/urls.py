@@ -14,14 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.conf import  settings
+from django.conf import settings
 from django.conf.urls.static import static
 
 # from shop import view
+from django.contrib import admin
+
 from shop import views
 from shop.view import user
 
 urlpatterns = [
+    url(r'^admin/', admin.site.urls),
     url(r'^$', views.index, name='home'),
     url(r'^index/$', views.index, name='index'),
     url(r'^login/', user.login, name='login'),
@@ -31,7 +34,8 @@ urlpatterns = [
     url(r'^download/$', views.download, name='download'),
     url(r'^querycar/$', views.queryCar, name='querycar'),
     url(r'^cart/$', views.cartView, name='cartView'),
-    url(r'^addgood/$', views.addgood, name='addgood')
-
+    url(r'^addgood/$', views.addgood, name='addgood'),
+    url(r'^editgood/$', views.editgood, name='editgood'),
+    url(r'^deletegood/(.*?)/$', views.deletegood, name='deletegood')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

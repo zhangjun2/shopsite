@@ -2,7 +2,7 @@ import json
 
 from django.core import serializers
 from django.db.models import Count
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, StreamingHttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpResponse
 from django.shortcuts import render, redirect
 
 # Create your view here.
@@ -11,20 +11,21 @@ from django.views.decorators.csrf import csrf_exempt
 
 from shop import cartApi
 from shop.models import Customer, Goods, ShoppingCar, Manager
+from shop.util.jsonresponse import JsonResponse
 
 
 def index(request, ismanager=False):
     regsite_manager()
-    if ismanager:
-        return render(request, 'home_m.html')
+    page = request.GET.get('page')
+    if page is None:
+        goods = Goods.objects.all()[0:10]
+        # goods1 = Goods.objects.values('name', 'price')
+        # goods2 = Goods.objects.values_list('name')
     else:
-        page = request.GET.get('page')
-        if page is None:
-            goods = Goods.objects.all()[0:10]
-            # goods1 = Goods.objects.values('name', 'price')
-            # goods2 = Goods.objects.values_list('name')
-        else:
-            goods = Goods.objects.all()[(int(page)-1)*10:int(page)*10]
+        goods = Goods.objects.all()[(int(page)-1)*10:int(page)*10]
+    if request.session.get('ismanager'):
+        return render(request, 'good_list_m.html', {'goods': goods})
+    else:
         # print(goods1)
         # print(goods2)
 
@@ -49,7 +50,7 @@ def detail(request, id):
 def addcar(req):
     goodId = req.GET.get('goodId')
     quantity = req.GET.get('quantity')
-    good = Goods.objects.filter(goodId=goodId).first()
+    good = Goods.objects.filter(good_id=goodId).first()
     print(good)
     print(quantity)
     userId = req.session['userId']
@@ -80,11 +81,17 @@ def readFile(filename, chunk_size=512):
 
 # 查询购物车商品总数
 def queryCar(req):
-    userId = req.session['userId']
-    response_data = {}
-    response_data['count'] = cartApi.getCartCount(userId)
-    response_data['goods'] = serializers.serialize('json', cartApi.getCartGoods(userId))
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
+    userId = req.session.get('userId')
+    if userId:
+        response_data = {}
+        response_data['count'] = cartApi.getCartCount(userId)
+        response_data['goods'] = serializers.serialize('json', cartApi.getCartGoods(userId))
+        res = JsonResponse()
+        res.status = res.STATUS_SUCCESS
+        res.data = response_data
+        # print(res)
+        # response_data['res'] = json.dumps(res)
+        return HttpResponse(json.dumps(res, default=lambda obj: obj.__dict__), content_type="application/json")
 
 
 # 查看购物车的商品
@@ -107,10 +114,30 @@ def addgood(req):
             goodType_id=req.POST['type']
         )
         if good:
-            return HttpResponse('添加成功')
+            return redirect(reverse('index'))
         else:
             return HttpResponse('添加失败!')
-    pass
+    else:
+        return render(req,'add_good_m.html')
+
+
+def editgood(request):
+    page = request.GET.get('page')
+    if page is None:
+        goods = Goods.objects.all()[0:10]
+        # goods1 = Goods.objects.values('name', 'price')
+        # goods2 = Goods.objects.values_list('name')
+    else:
+        goods = Goods.objects.all()[(int(page) - 1) * 10:int(page) * 10]
+    return render(request, 'good_list_m.html', {'goods': goods})
+
+
+def deletegood(request):
+    good_id = request.GET.get('id')
+    Goods.objects.filter(good_id=good_id).delete()
+    response_data = {}
+    response_data['status'] = 'SUCCESS'
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 
 # 注册一个管理员账号
@@ -119,4 +146,3 @@ def regsite_manager():
         pass
     else:
         manager = Manager.objects.create(username='张军',userAccount='zhangjun',password='zhangjun6615');
-        manager.save()

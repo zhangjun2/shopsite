@@ -124,7 +124,7 @@
                                 $(document).ready(function () {
                                     $('#add').click(function () {
                                         var select = $("#quantity").find("option:selected").text();
-                                        $.get('/addcart/', {'goodId':'{{ good.goodId }}', 'quantity':select},function (ret) {
+                                        $.get('/addcart/', {'goodId':'{{ good.good_id }}', 'quantity':select},function (ret) {
                                             $('#result').html('成功添加至购物车')
                                         })
                                     })

@@ -10,7 +10,7 @@
                             $.get('/querycar/', function (ret) {
                                     if (ret.count>0) {
                                         $('#carn').html('Your Cart is Not Empty');
-                                        $('#cartspan').html('('+ret.count+')');
+                                        $('#cartspan').html('('+ret.data.get('count')+')');
                                     }else {
                                         $('#cartspan').hidden
                                     }

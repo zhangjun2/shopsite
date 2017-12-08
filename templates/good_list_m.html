@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/static/js/jquery.min.js"></script>
+    <title>Title</title>
+
+    <style>
+        td{
+            padding: 20px;
+            border: 2px solid black
+        }
+    </style>
+    <script>
+        function deletegood(id) {
+            var good_id= id;
+            alert("确定删除该商品吗？")
+            $.ajax({url:{% url 'deletegood' good_id %},success:function(result){
+                    if (result.status == 'SUCCESS'){
+                        alert("删除成功!")
+                    }else {
+                        alert("删除失败!")
+                    }
+            }
+            })
+        }
+    </script>
+</head>
+<body>
+    <div style="width:80%;margin: 100px auto;">
+        <table style="border: 2px solid black">
+            <thead style="font-size: large">商品列表</thead>
+            <tbody>
+                <tr>
+                        <td>商品id</td>
+                        <td>商品名称</td>
+                        <td>商品价格</td>
+                        <td>商品描述</td>
+                        <td>商品图片</td>
+                        <td>删除</td>
+                    </tr>
+                {% for good in goods %}
+                    <tr>
+                        <td>{{ good.good_id }}</td>
+                        <td>{{ good.name }}</td>
+                        <td>{{ good.price }}</td>
+                        <td>{{ good.description }}</td>
+                        <td><img src="{{ good.fontPageImg.url }}" style="width: 120px;height: 80px"></td>
+                        <td><button type='submit' onclick=deletegood('1001')>删除</button></td>
+{#                        <td><button type='submit' onclick="window.location.href={% url 'deletegood' good.good_id %}">删除</button></td>#}
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+
+        <div style="margin-top: 50px">
+            <input type="button" name="add" value="添加商品" onclick="window.location.href='{% url 'addgood' %}'"/>
+        </div>
+
+    </div>
+
+</body>
+</html>

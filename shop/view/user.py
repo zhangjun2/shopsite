@@ -17,10 +17,10 @@ from shop.models import Customer, Goods, ShoppingCar, Manager
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
-        ismanager = request.POST['ismanager']
-        request.session['ismanager'] = ismanager
+        ismanager = request.POST.get('ismanager')
         print(ismanager)
         if ismanager:
+            request.session['ismanager'] = True
             userAccount = request.POST['email']
             password = request.POST['password']
             c = Manager.objects.filter(userAccount=userAccount, password=password).first()
@@ -31,6 +31,7 @@ def login(request):
             else:
                 return HttpResponse('管理员登录失败')
         else:
+            request.session['ismanager'] = False
             email = request.POST['email']
             password = request.POST['password']
             c = Customer.objects.filter(email=email, password=password).first()
@@ -60,4 +61,4 @@ def register(request):
                 request.session['userId'] = str(user.id)
             return redirect(reverse('index'))
     else:
-        return render(request, 'add_good_m.html')
+        return render(request, 'register.html')

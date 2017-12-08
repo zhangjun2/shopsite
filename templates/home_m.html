@@ -6,7 +6,9 @@
 </head>
 <body>
 
-<input type="button" name="add" value="添加商品"/>
+<input type="button" name="add" value="添加商品" onclick="window.location.href='{% url 'addgood' %}'"/>
+
+<input type="button" name="edit" value="编辑商品" onclick="window.location.href='{% url 'editgood' %}'">
 
 </body>
 </html>
