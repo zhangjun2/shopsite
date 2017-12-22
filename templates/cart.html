@@ -6,16 +6,16 @@
     首页
 {% endblock %}
 {% block content %}
-    {#    <script>#}
-    {#        $.get('/querycar/', function (ret) {#}
-    {#            if (ret.count > 0) {#}
-    {#                #}
-    {#            } else {#}
-    {#            }#}
-    {##}
-    {#        });#}
-    {#    </script>#}
-
+    <style>
+        th{
+            padding: 20px;
+            border: 2px solid black
+        }
+        td{
+            padding: 20px;
+            border: 2px solid black
+        }
+    </style>
     <div style="height: 400px;width: 60%; margin: 0 auto">
         <table class="table table-bordered">
             <caption>购物车物品</caption>
@@ -24,6 +24,7 @@
                 <th>名称</th>
                 <th>价格</th>
                 <th>数量</th>
+                <th>介绍图</th>
             </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                     <td>{{ good.good.name }}</td>
                     <td>{{ good.good.price }}</td>
                     <td>{{ good.quantity }}</td>
+                    <td><img src={{ good.good.fontPageImg.url }}/></td>
                 </tr>
             {% endfor %}
 

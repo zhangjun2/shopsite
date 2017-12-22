@@ -7,14 +7,17 @@
                     <script type="text/javascript">
                         $(function () {
                             var $cart = $('#cart');
-                            $.get('/querycar/', function (ret) {
-                                    if (ret.count>0) {
+                            $.getJSON('/querycar', function (ret) {
+                                    if (ret.data.count>0) {
                                         $('#carn').html('Your Cart is Not Empty');
-                                        $('#cartspan').html('('+ret.data.get('count')+')');
+                                        $('#cartspan').html('('+ret.data.count+')');
                                     }else {
                                         $('#cartspan').hidden
                                     }
-
+                                    console.log(ret)
+                                    console.log(ret.data)
+                                    console.log(ret.data.count)
+{#                                    $('#cartspan').html(ret.data.count);#}
                                 });
                             $('#clickme').click(function (e) {
                                 e.stopPropagation();

@@ -24,6 +24,16 @@
             }
             })
         }
+        $('#delete').click(function () {
+            $.ajax({url:{% url 'deletegood' '1000' %},success:function(result){
+                    if (result.status == 'SUCCESS'){
+                        alert("删除成功!")
+                    }else {
+                        alert("删除失败!")
+                    }
+            }
+            })
+        })
     </script>
 </head>
 <body>
@@ -46,7 +56,7 @@
                         <td>{{ good.price }}</td>
                         <td>{{ good.description }}</td>
                         <td><img src="{{ good.fontPageImg.url }}" style="width: 120px;height: 80px"></td>
-                        <td><button type='submit' onclick=deletegood('1001')>删除</button></td>
+                        <td><button id="delete" type='submit' >删除</button></td>
 {#                        <td><button type='submit' onclick="window.location.href={% url 'deletegood' good.good_id %}">删除</button></td>#}
                     </tr>
                 {% endfor %}

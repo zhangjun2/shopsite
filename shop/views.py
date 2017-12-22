@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from shop import cartApi
+from shop.forms import GoodForm
 from shop.models import Customer, Goods, ShoppingCar, Manager
 from shop.util.jsonresponse import JsonResponse
 
@@ -54,9 +55,16 @@ def addcar(req):
     print(good)
     print(quantity)
     userId = req.session['userId']
-    car = ShoppingCar.objects.create(userId=userId, quantity=quantity, good=good)
-    if car:
-        return HttpResponse('河涸海干', content_type='application/json')
+    car_good = ShoppingCar.objects.filter(userId=userId, good=good).first()
+    if car_good:
+        count = int(quantity)+int(car_good.quantity)
+        car_good.quantity = count
+        car_good.save()
+    else:
+        car = ShoppingCar.objects.create(userId=userId, quantity=quantity, good=good)
+    res = JsonResponse()
+    res.status = res.STATUS_SUCCESS
+    return HttpResponse(json.dumps(res, default=lambda obj: obj.__dict__), content_type="application/json")
 
 
 @csrf_exempt
@@ -103,22 +111,34 @@ def cartView(req):
 
 
 # 管理员添加产品
-@csrf_exempt
+# @csrf_exempt
 def addgood(req):
     if req.method == 'POST':
-        good = Goods.objects.create(
-            name=req.POST['name'],
-            price=req.POST['price'],
-            description=req.POST['description'],
-            fontPageImg=req.FILES.get('fontimage'),
-            goodType_id=req.POST['type']
-        )
-        if good:
-            return redirect(reverse('index'))
+        good_form = GoodForm(req.POST)
+        if good_form.is_valid():
+            # good = Goods.objects.create(
+            #     name=req.POST['name'],
+            #     price=req.POST['price'],
+            #     description=req.POST['description'],
+            #     fontPageImg=req.FILES.get('fontimage'),
+            #     goodType_id=req.POST['type']
+            # )
+            good = Goods.objects.create(
+                name=good_form.cleaned_data['name'],
+                price=good_form.cleaned_data['price'],
+                description=good_form.cleaned_data['description'],
+                fontPageImg=req.FILES.get('fontimage'),
+                goodType_id=1
+            )
+            if good:
+                return redirect(reverse('index'))
+            else:
+                return HttpResponse('添加失败!')
         else:
             return HttpResponse('添加失败!')
     else:
-        return render(req,'add_good_m.html')
+        form = GoodForm()
+        return render(req, 'add_good_m.html', {'form': form})
 
 
 def editgood(request):
@@ -145,4 +165,4 @@ def regsite_manager():
     if Manager.objects.first():
         pass
     else:
-        manager = Manager.objects.create(username='张军',userAccount='zhangjun',password='zhangjun6615');
+        manager = Manager.objects.create(username='张军',userAccount='zhangjun',password='zhangjun6615')

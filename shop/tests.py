@@ -190,7 +190,15 @@ def test05(leng):
 		n = n + 1
 	return 'done'
 
-g = test05(10)
-for x in g:
-	print(x)
-print(type(g))
+# g = test05(10)
+# for x in g:
+# 	print(x)
+# print(type(g))
+
+
+def test06():
+	lst = [1, 3, 5, 8, 10, 13, 18, 36, 78]
+	new_list = list(x for x in lst[::2] if x%2==0)
+	return new_list
+
+# print(test06())
