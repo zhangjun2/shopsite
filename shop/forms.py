@@ -18,5 +18,5 @@ class GoodForm(forms.Form):
     price = forms.FloatField(label='价格')
     name = forms.CharField(label='名称', max_length=100)
     description = forms.CharField(label='描述', max_length=200)
-    # fontPageImg = forms.FileField(label='缩略图')
+    fontPageImg = forms.FileField(label='缩略图')
 

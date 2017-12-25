@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^$', views.index, name='home'),
     url(r'^index/$', views.index, name='index'),
     url(r'^login/', user.login, name='login'),
+    url(r'^logout/', user.logout, name='logout'),
     url(r'^register', user.register, name='register'),
     url(r'^detail/(.*?)/$', views.detail, name='detail'),
     url(r'^addcart/$', views.addcar, name='addcart'),

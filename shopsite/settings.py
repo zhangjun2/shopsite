@@ -122,5 +122,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # 设置静态文件路径为主目录下的media文件夹
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
+MEDIA_ROOT = os.path.join('D:\\soft\\upload', 'media').replace('\\', '/')
+# os.path.dirname('D:\\soft\\upload')
 

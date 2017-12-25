@@ -114,7 +114,7 @@ def cartView(req):
 # @csrf_exempt
 def addgood(req):
     if req.method == 'POST':
-        good_form = GoodForm(req.POST)
+        good_form = GoodForm(req.POST, req.FILES)
         if good_form.is_valid():
             # good = Goods.objects.create(
             #     name=req.POST['name'],
@@ -127,7 +127,7 @@ def addgood(req):
                 name=good_form.cleaned_data['name'],
                 price=good_form.cleaned_data['price'],
                 description=good_form.cleaned_data['description'],
-                fontPageImg=req.FILES.get('fontimage'),
+                fontPageImg=good_form.cleaned_data['fontPageImg'],
                 goodType_id=1
             )
             if good:
