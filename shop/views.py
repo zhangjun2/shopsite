@@ -23,7 +23,7 @@ def index(request, ismanager=False):
         # goods1 = Goods.objects.values('name', 'price')
         # goods2 = Goods.objects.values_list('name')
     else:
-        goods = Goods.objects.all()[(int(page)-1)*10:int(page)*10]
+        goods = Goods.objects.all()[(int(page) - 1) * 10:int(page) * 10]
     if request.session.get('ismanager'):
         return render(request, 'good_list_m.html', {'goods': goods})
     else:
@@ -137,6 +137,7 @@ def addgood(req):
         else:
             return HttpResponse('添加失败!')
     else:
+        return render(req, 'add_good_m.html')
         form = GoodForm()
         return render(req, 'add_good_m.html', {'form': form})
 

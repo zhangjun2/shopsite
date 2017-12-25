@@ -91,3 +91,6 @@ class Manager(models.Model):
         verbose_name = '管理员'
         verbose_name_plural = verbose_name
 
+
+# class User(models.Model):
+
