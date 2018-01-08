@@ -16,30 +16,73 @@
             border: 2px solid black
         }
     </style>
-    <div style="height: 400px;width: 60%; margin: 0 auto">
-        <table class="table table-bordered">
-            <caption>购物车物品</caption>
-            <thead>
-            <tr>
-                <th>名称</th>
-                <th>价格</th>
-                <th>数量</th>
-                <th>介绍图</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {% for good in  goods %}
-                <tr>
-                    <td>{{ good.good.name }}</td>
-                    <td>{{ good.good.price }}</td>
-                    <td>{{ good.quantity }}</td>
-                    <td><img src={{ good.good.fontPageImg.url }}/></td>
-                </tr>
+    <div style="width: 60%; margin: 0 auto">
+{#        <table class="table table-bordered">#}
+{#            <caption>购物车物品</caption>#}
+{#            <thead>#}
+{#            <tr>#}
+{#                <th>名称</th>#}
+{#                <th>价格</th>#}
+{#                <th>数量</th>#}
+{#                <th>介绍图</th>#}
+{#            </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{##}
+{#            {% for good in  goods %}#}
+{#                <tr>#}
+{#                    <td>{{ good.good.name }}</td>#}
+{#                    <td>{{ good.good.price }}</td>#}
+{#                    <td>{{ good.quantity }}</td>#}
+{#                    <td><img src={{ good.good.fontPageImg.url }}/></td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{##}
+{#            </tbody>#}
+{#        </table>#}
+        <h3>购物车物品</h3>
+        <ul>
+            {% for good in goods %}
+                <li>
+                    <div onClick="window.location.href='{% url 'detail' good.good_id %}'" class="product-grid fade">
+                        <div class="product-grid-head">
+                            <ul class="grid-social">
+                                <li><a class="facebook" href=""><span> </span></a></li>
+                                <li><a class="twitter" href=""><span> </span></a></li>
+                                <li><a class="googlep" href=""><span> </span></a></li>
+                                <div class="clear"></div>
+                            </ul>
+                            <div class="block">
+                                <div class="starbox small ghosting"></div>
+                                <span> (46)</span>
+                            </div>
+                        </div>
+                        <div class="product-pic">
+                            <a style="width:100% ;margin: 0 auto" href="#"><img style="width:80% ;margin: 0 auto" src="{{ good.fontPageImg.url }}" title="product-name"/></a>
+                            <p>
+                                <a href="#">
+                                    <small>{{ good.name }}</small>
+                                    <small>Phantom</small>
+                                    </a>
+                                <span>{{ good.description }}</span>
+                            </p>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-info-cust">
+                                <a href="{% url 'detail' good.good_id %}">Details</a>
+                            </div>
+                            <div class="product-info-price">
+                                <a >&#163; {{ good.price }}</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="more-product-info">
+                            <span> </span>
+                        </div>
+                    </div>
+                </li>
             {% endfor %}
-
-            </tbody>
-        </table>
+        </ul>
     </div>
 {% endblock %}
 

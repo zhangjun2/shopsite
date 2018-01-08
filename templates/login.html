@@ -12,18 +12,51 @@
 {#						<p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>#}
 {#						<a class="acount-btn" href="{% url 'register' %}">Creat an Account</a>#}
 {#					</div>#}
+                    <script>
+                        function login() {
+                            var username = $('#username').val()
+                            var password = $('#password').val()
+                            if(username=="") {
+                                alert('用户名不能为空！')
+                                return false
+                            }
+                            if (password=="") {
+                                alert('请输入密码！')
+                                return false
+                            }
+                            $.ajax({
+                                url:'{% url 'login' %}',
+                                type:'post',
+                                data:{'email':username,"password":password},
+                                dataType:"json",
+                                success:function (result) {
+                                    var status = result.status
+                                    var data = result.data
+                                    if(status=='SUCCESS') {
+                                        window.location.href="{% url 'index' %}"
+                                    }else{
+                                        alert(result)
+                                        return false
+                                    }
+                                }
+                            }
+                            )
+                            return true
+                        }
+
+                    </script>
 					<div class="login-right">
 						<h3>用户登录</h3>
 						<p>If you have an account with us, please log in.</p>
-						<form action="{% url 'login' %}" method="post">
+						<form action="{% url 'login' %}" method="post" onsubmit="return login()">
 
 							<div>
 								<span>用户名<label>*</label></span>
-								<input type="text" name="email">
+								<input id="username" type="text" name="email">
 							</div>
 							<div>
 								<span>密码<label>*</label></span>
-								<input type="text" name="password">
+								<input id="password" type="password" name="password">
 							</div>
 
                             <input type="checkbox" name="ismanager">管理员登录

@@ -1,9 +1,15 @@
 # -*- coding:utf-8 -*-
+import json
+
+from django.contrib.sessions.backends.db import SessionStore
+
+from shop.util.jsonresponse import JsonResponse
+
 _author__ = 'ZHANGJUN'
 
 from django.core import serializers
 from django.db.models import Count
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, StreamingHttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, StreamingHttpResponse
 from django.shortcuts import render, redirect
 
 # Create your view here.
@@ -27,9 +33,18 @@ def login(request):
 			if c:
 				request.session['username'] = c.userAccount
 				request.session['userId'] = c.manage_id
-				return redirect(reverse('index'))
+				request.session['islogin'] = True
+				# return redirect(reverse('index'))
+				res = JsonResponse()
+				res.status = JsonResponse.STATUS_SUCCESS
+				res.data = {"userid": c.manage_id}
+				return HttpResponse(json.dumps(res, default=lambda obj: obj.__dict__), content_type="application/json")
 			else:
-				return HttpResponse('管理员登录失败')
+				# return HttpResponse('管理员登录失败')
+				res = JsonResponse()
+				res.status = JsonResponse.STATUS_ERROR
+				res.errorMsg = "管理员登录失败"
+				return HttpResponse(json.dumps(res, default=lambda obj: obj.__dict__), content_type="application/json")
 		else:
 			request.session['ismanager'] = False
 			email = request.POST['email']
@@ -38,9 +53,18 @@ def login(request):
 			if c:
 				request.session['username'] = c.userAccount
 				request.session['userId'] = c.id
-				return redirect(reverse('index'))
+				request.session['islogin'] = True
+				# return redirect(reverse('index'))
+				res = JsonResponse()
+				res.status = JsonResponse.STATUS_SUCCESS
+				res.data = {"userid": c.id}
+				return HttpResponse(json.dumps(res, default=lambda obj: obj.__dict__), content_type="application/json")
 			else:
-				return HttpResponse('邮箱或者密码错误！')
+				res = JsonResponse()
+				res.status = JsonResponse.STATUS_ERROR
+				res.errorMsg = "登录失败"
+				return HttpResponse(json.dumps(res, default=lambda obj: obj.__dict__), content_type="application/json")
+				# return HttpResponse('邮箱或者密码错误！')
 	else:
 		return render(request, 'login.html')
 
@@ -59,6 +83,7 @@ def register(request):
 			if user:
 				request.session['username'] = user.userAccount
 				request.session['userId'] = str(user.id)
+				request.sesson['islogin'] = True
 			return redirect(reverse('index'))
 	else:
 		return render(request, 'register.html')
@@ -67,6 +92,8 @@ def register(request):
 def logout(req):
 	if req.method == 'GET':
 		print(type(req.session))
-		del req.session['userId']
-		del req.session['username']
+		if req.session.get('userId'):
+			del req.session['userId']
+			del req.session['username']
+			del req.session['islogin']
 		return redirect(reverse('login'))

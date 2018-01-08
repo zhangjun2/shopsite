@@ -100,7 +100,7 @@
                     <!---//End-rate---->
                     <!---caption-script---->
                     <!---//caption-script---->
-                    {% for good in goods %}
+                    {% for good in object_list %}
                         <div onClick="window.location.href='{% url 'detail' good.good_id %}'" class="product-grid fade">
                         <div class="product-grid-head">
                             <ul class="grid-social">
@@ -143,6 +143,10 @@
             </div>
             <div class="clear"></div>
         </div>
+    </div>
+
+    <div style="">
+
     </div>
 {% endblock %}
 

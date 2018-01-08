@@ -22,11 +22,13 @@ from django.contrib import admin
 
 from shop import views
 from shop.view import user
+from shop.view.good import GoodListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='home'),
-    url(r'^index/$', views.index, name='index'),
+    url(r'^$', GoodListView.as_view(), name='home'),
+    # url(r'^index/$', views.index, name='index'),
+    url(r'^index/$', GoodListView.as_view(), name='index'),
     url(r'^login/', user.login, name='login'),
     url(r'^logout/', user.logout, name='logout'),
     url(r'^register', user.register, name='register'),
